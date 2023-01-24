@@ -2,107 +2,124 @@
 <html lang="en">
 
 <head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <meta name="description" content="Start your development with Creative Studio landing page.">
-   <meta name="author" content="Devcrud">
-   <title>Creative Studio | Components</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with Creative Studio landing page.">
+    <meta name="author" content="Devcrud">
+    <title>Creative Studio | Components</title>
 
-   <!-- font icons -->
-   <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
+    <!-- font icons -->
+    <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
 
-   <!-- Bootstrap + Creative Studio main styles -->
-   <link rel="stylesheet" href="assets/css/creative-studio.css">
+    <!-- Bootstrap + Creative Studio main styles -->
+    <link rel="stylesheet" href="assets/css/creative-studio.css">
 
-   <script>
-      setTimeout(() => {
-         const grossSalary = document.getElementById('grossSalary');
-         const totalInvestment = document.getElementById('totalInvestment');
-         const result = document.getElementById('result');
+    <script>
+        setTimeout(() => {
+            const grossSalary = document.getElementById('grossSalary');
+            const totalInvestment = document.getElementById('totalInvestment');
+            const result = document.getElementById('result');
 
-         const inputHandler = function (e) {
-            var grossSalary = document.getElementById('grossSalary').value;
-            var totalInvestment = document.getElementById('totalInvestment').value;
-            var netSalary = parseInt(grossSalary == "" ? 0 : grossSalary) - parseInt(totalInvestment == "" ? 0 : totalInvestment);
+            function calc(per, netSalary) {
+                var tax = 0;
 
-            if (netSalary <= 250000) {
-               result.innerHTML = "Nill";
-            } else if (netSalary > 250000 && netSalary <= 500000) {
-               debugger
-               var tax = netSalary * 5 / 100;
-               result.innerHTML = "Yearly:" + tax + "\nMonthly:" + (tax / 12).toFixed(2);
-            } else if (netSalary > 500000 && netSalary <= 1000000) {
-               var tax = netSalary * 20 / 100;
-               tax = tax + ((tax*4)/100); //Education Cess
-               result.innerHTML = "Yearly:" + tax + "\nMonthly:" + (tax / 12).toFixed(2);
-            } else {
-               var tax = netSalary * 30 / 100;
-               tax = tax + ((tax*4)/100); //Education Cess
-               result.innerHTML = "Yearly:" + tax + "\nMonthly:" + (tax / 12).toFixed(2);
+                if (per == 5) {
+                    tax = netSalary * per / 100;;
+                }
+                if (per == 20) {
+                    tax = (netSalary - 500000) * per / 100;
+                    tax = tax + 12500;
+
+                    tax = tax + ((tax * 4) / 100); //Education Cess
+                }
+                if (per == 30) {
+                    tax = (netSalary - 1000000) * per / 100;
+                    tax = tax + 112500;
+
+                    tax = tax + ((tax * 4) / 100); //Education Cess
+                }
+
+                result.innerHTML = tax + " per annum \n" + (tax / 12).toFixed(2) + " per month";
+                percentage.innerHTML = per + '%';
             }
-         }
 
-         grossSalary.addEventListener('input', inputHandler);
-         grossSalary.addEventListener('propertychange', inputHandler); // for IE8
+            const inputHandler = function (e) {
+                var grossSalary = document.getElementById('grossSalary').value;
+                var totalInvestment = document.getElementById('totalInvestment').value;
+                var netSalary = parseInt(grossSalary == "" ? 0 : grossSalary) - parseInt(totalInvestment == "" ? 0 : totalInvestment) - 50000;
+                var percentage = document.getElementById('percentage');
 
-         totalInvestment.addEventListener('input', inputHandler);
-         totalInvestment.addEventListener('propertychange', inputHandler); // for IE8
-      }, 500);
-   </script>
+                if (netSalary <= 250000) {
+                    result.innerHTML = "Nill";
+                    percentage.innerHTML = '0%';
+                } else if (netSalary > 250000 && netSalary <= 500000) {
+                    calc(5, netSalary);
+                } else if (netSalary > 500000 && netSalary <= 1000000) {
+                    calc(20, netSalary);
+                } else {
+                    calc(30, netSalary);
+                }
+            }
+
+            grossSalary.addEventListener('input', inputHandler);
+            grossSalary.addEventListener('propertychange', inputHandler); // for IE8
+
+            totalInvestment.addEventListener('input', inputHandler);
+            totalInvestment.addEventListener('propertychange', inputHandler); // for IE8
+        }, 500);
+    </script>
 </head>
 
 <body class="dark-theme">
 
 
-   <!-- main content -->
-   <div class="container">
+    <!-- main content -->
+    <div class="container">
 
-      <div class="row mt-5">
-         <div class="col-md-6">
-            <h6 class="section-secondary-title">Calculate Net Salary</h6>
-            <div class="form-group">
-               <input type="number" class="form-control" id="grossSalary" placeholder="Gross Salary (Annual)">
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h6 class="section-secondary-title">Calculate Net Salary</h6>
+                <div class="form-group">
+                    <input type="number" class="form-control" id="grossSalary" placeholder="Gross Salary (Annual)">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" id="totalInvestment"
+                        placeholder="Total Investment (Annual)">
+                </div>
+                <h6 class="section-secondary-title"><b>Tax (Old Regime)</b></h6>
+
+                <div class="form-group">
+                    <textarea class="form-control" readonly id="result" rows="3" placeholder="Result"></textarea>
+                </div>
             </div>
-            <div class="form-group">
-               <input type="number" class="form-control" id="totalInvestment" placeholder="Total Investment (Annual)">
-            </div>
-            <h6 class="section-secondary-title"><b>Tax (Old Regime)</b></h6>
 
-            <div class="form-group">
-               <textarea class="form-control" readonly id="result" rows="3" placeholder="Result"></textarea>
-            </div>
-         </div>
+        </div> <!-- end of inputs -->
 
-      </div> <!-- end of inputs -->
+        <table class="table table-borderless v-align-center">
+            <tbody>
+                <tr>
 
-      <table class="table table-borderless v-align-center">
-         <tbody>
-            <tr>
-               <td>
-                  <p class="font-weight-bold text-muted">Info Text :</p>
-               </td>
-               <td>
-                  <p class="text-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, nulla,
-                     reprehenderit! Beatae, dolor harum fugiat.</p>
-               </td>
-            </tr>
-         </tbody>
-      </table>
-   </div>
-   <!-- end of typography -->
+                    <td>
+                        <p class="text-info">You are in <span id="percentage">0%</span> tax slab</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- end of typography -->
 
-   <!-- Page Footer -->
-   <div class="bg-dark text-light text-center border-top wow fadeIn">
-      <p class="mb-0 py-3 text-muted small">&copy; Copyright
-         <script>document.write(new Date().getFullYear())</script> Made with <i class="ti-heart text-danger"></i> By <a
-            href="https://www.linkedin.com/in/mahmadshahid-solanki-bb3ab7179/">Mahmadshahid</a>
-      </p>
-   </div>
-   <!-- End of Page Footer -->
+    <!-- Page Footer -->
+    <div class="bg-dark text-light text-center border-top wow fadeIn">
+        <p class="mb-0 py-3 text-muted small">&copy; Copyright
+            <script>document.write(new Date().getFullYear())</script> Made with <i class="ti-heart text-danger"></i> By
+            <a href="https://www.linkedin.com/in/mahmadshahid-solanki-bb3ab7179/">Mahmadshahid</a>
+        </p>
+    </div>
+    <!-- End of Page Footer -->
 
-   <!-- core  -->
-   <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
-   <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+    <!-- core  -->
+    <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
+    <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
 
 </body>
 
