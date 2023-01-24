@@ -22,6 +22,15 @@
             const approxSalary = document.getElementById('approxSalary');
             const approxSalaryWithTax = document.getElementById('approxSalaryWithTax');
 
+            function numberFormat(x) {
+                x = x.toString();
+                var lastThree = x.substring(x.length - 3);
+                var otherNumbers = x.substring(0, x.length - 3);
+                if (otherNumbers != '')
+                    lastThree = ',' + lastThree;
+                var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+                return res;
+            }
             function calc(per, netSalary) {
                 var tax = 0;
 
@@ -41,12 +50,12 @@
                     tax = tax + ((tax * 4) / 100); //Education Cess
                 }
 
-                result.innerHTML = tax + " per annum \n" + (tax / 12).toFixed(2) + " per month";
+                result.innerHTML = numberFormat(tax) + " per annum \n" + numberFormat((tax / 12)) + " per month";
                 percentage.innerHTML = per + '%';
 
                 debugger
-                approxSalaryWithTax.innerHTML = Math.round((grossSalary.value /12) - (tax / 12));
-                approxSalary.innerHTML = Math.round((grossSalary.value /12));
+                approxSalaryWithTax.innerHTML = numberFormat(Math.round((grossSalary.value / 12) - (tax / 12)));
+                approxSalary.innerHTML = numberFormat(Math.round((grossSalary.value / 12)));
             }
 
             const inputHandler = function (e) {
@@ -101,7 +110,8 @@
                 <h6 class="section-secondary-title"><b>Approx. Per month Salary (With tax)</b></h6>
 
                 <div class="form-group">
-                    <textarea class="form-control" readonly id="approxSalaryWithTax" rows="1" placeholder="0,000"></textarea>
+                    <textarea class="form-control" readonly id="approxSalaryWithTax" rows="1"
+                        placeholder="0,000"></textarea>
                 </div>
 
                 <h6 class="section-secondary-title"><b>Approx. Per month Salary (Without tax)</b></h6>
