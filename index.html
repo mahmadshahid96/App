@@ -19,6 +19,8 @@
             const grossSalary = document.getElementById('grossSalary');
             const totalInvestment = document.getElementById('totalInvestment');
             const result = document.getElementById('result');
+            const approxSalary = document.getElementById('approxSalary');
+            const approxSalaryWithTax = document.getElementById('approxSalaryWithTax');
 
             function calc(per, netSalary) {
                 var tax = 0;
@@ -41,6 +43,10 @@
 
                 result.innerHTML = tax + " per annum \n" + (tax / 12).toFixed(2) + " per month";
                 percentage.innerHTML = per + '%';
+
+                debugger
+                approxSalaryWithTax.innerHTML = Math.round((grossSalary.value /12) - (tax / 12));
+                approxSalary.innerHTML = Math.round((grossSalary.value /12));
             }
 
             const inputHandler = function (e) {
@@ -89,7 +95,18 @@
                 <h6 class="section-secondary-title"><b>Tax (Old Regime)</b></h6>
 
                 <div class="form-group">
-                    <textarea class="form-control" readonly id="result" rows="3" placeholder="Result"></textarea>
+                    <textarea class="form-control" readonly id="result" rows="3" placeholder="0,0"></textarea>
+                </div>
+
+                <h6 class="section-secondary-title"><b>Approx. Per month Salary (With tax)</b></h6>
+
+                <div class="form-group">
+                    <textarea class="form-control" readonly id="approxSalaryWithTax" rows="1" placeholder="0,000"></textarea>
+                </div>
+
+                <h6 class="section-secondary-title"><b>Approx. Per month Salary (Without tax)</b></h6>
+                <div class="form-group">
+                    <textarea class="form-control" readonly id="approxSalary" rows="1" placeholder="0,000"></textarea>
                 </div>
             </div>
 
