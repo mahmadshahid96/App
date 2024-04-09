@@ -5,14 +5,31 @@
 </head>
 
 <body>
-	<div style="text-align: center;">
+	<!-- <div style="text-align: center;">
 		<input type="number" placeholder="e.g. 150₹" id="amount" name="amount" />
 		<input type="button" onclick="onAmountEnter()" value="Generate">
 		<center>
 		<div id="qrcode" style="padding-top: 15px;"></div>
 	</center>
+	</div> -->
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="text-center">
+					<input type="number" class="form-control" placeholder="e.g. 150₹" id="amount" name="amount" />
+					<input type="button" class="btn btn-primary mt-2" onclick="onAmountEnter()" value="Generate">
+				</div>
+				<div id="qrcode" class="text-center mt-3"></div>
+			</div>
+		</div>
 	</div>
+
 	<script src="qrcode.min.js"></script>
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Bootstrap JavaScript (optional, for certain components and features) -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
 		function onAmountEnter() {
 			// Get the value of the amount input field
@@ -27,9 +44,9 @@
 				// Generate new QR code
 				const qrcode = new QRCode(qrcodeElement, {
 					text: 'upi://pay?pa=manalibhatt2012@ybl&mc=0000&mode=02&am=' + amountValue,
-					width: 256,
-					height: 256,
-					colorDark: '#000',
+					width: 510,
+					height: 510,
+					colorDark: '#679',
 					colorLight: '#fff',
 					correctLevel: QRCode.CorrectLevel.H
 				});
