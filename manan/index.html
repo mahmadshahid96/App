@@ -2,20 +2,15 @@
 
 <head>
 	<title>basic example</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-	<!-- <div style="text-align: center;">
-		<input type="number" placeholder="e.g. 150₹" id="amount" name="amount" />
-		<input type="button" onclick="onAmountEnter()" value="Generate">
-		<center>
-		<div id="qrcode" style="padding-top: 15px;"></div>
-	</center>
-	</div> -->
 	<div class="container mt-5">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 				<div class="text-center">
+					Enter amount :
 					<input type="number" class="form-control" placeholder="e.g. 150₹" id="amount" name="amount" />
 					<input type="button" class="btn btn-primary mt-2" onclick="onAmountEnter()" value="Generate">
 				</div>
@@ -44,8 +39,8 @@
 				// Generate new QR code
 				const qrcode = new QRCode(qrcodeElement, {
 					text: 'upi://pay?pa=manalibhatt2012@ybl&mc=0000&mode=02&am=' + amountValue,
-					width: 510,
-					height: 510,
+					width: 350,
+					height: 350,
 					colorDark: '#679',
 					colorLight: '#fff',
 					correctLevel: QRCode.CorrectLevel.H
