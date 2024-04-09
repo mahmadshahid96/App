@@ -1,0 +1,42 @@
+<html>
+
+<head>
+	<title>basic example</title>
+</head>
+
+<body>
+	<div style="text-align: center;">
+		<input type="number" placeholder="e.g. 150₹" id="amount" name="amount" />
+		<input type="button" onclick="onAmountEnter()" value="Generate">
+		<center>
+		<div id="qrcode" style="padding-top: 15px;"></div>
+	</center>
+	</div>
+	<script src="qrcode.min.js"></script>
+	<script>
+		function onAmountEnter() {
+			// Get the value of the amount input field
+			const amountValue = document.getElementById('amount').value.trim();
+
+			// Validate if it is not blank
+			if (amountValue !== '') {
+				// Clear existing QR code
+				const qrcodeElement = document.getElementById('qrcode');
+				qrcodeElement.innerHTML = '';
+
+				// Generate new QR code
+				const qrcode = new QRCode(qrcodeElement, {
+					text: 'upi://pay?pa=manalibhatt2012@ybl&mc=0000&mode=02&am=' + amountValue,
+					width: 256,
+					height: 256,
+					colorDark: '#000',
+					colorLight: '#fff',
+					correctLevel: QRCode.CorrectLevel.H
+				});
+			} else {
+				alert('Please enter a valid amount.'); // You can customize this validation message
+			}
+		}
+	</script>
+</body>
+</html>
